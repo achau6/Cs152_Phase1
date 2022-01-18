@@ -40,7 +40,7 @@ endif          {printf("ENDIF\n"); pos += yyleng;}
 else           {printf("ELSE\n"); pos += yyleng;}
 while          {printf("WHILE\n"); pos += yyleng;}
 do             {printf("DO\n"); pos += yyleng;}
-beginloop      {printf("BEGIN_LOOP\n"); pos += yyleng;}
+beginloop      {printf("BEGINLOOP\n"); pos += yyleng;}
 endloop        {printf("ENDLOOP\n"); pos += yyleng;}
 continue       {printf("CONTINUE\n"); pos += yyleng;}
 break          {printf("BREAK\n"); pos += yyleng;}
@@ -85,7 +85,7 @@ int main(int argc, char ** argv)
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
-   printf("Number of integers: %d\n", numbers);
-   printf("Number of parentheses: %d\n", parentheses); 
-   printf("Number of operators: %d\n", operators);
+   /*printf("Number of integers: %d\n", numbers);*/
+   /*printf("Number of parentheses: %d\n", parentheses);*/ 
+   /*printf("Number of operators: %d\n", operators);*/
 }

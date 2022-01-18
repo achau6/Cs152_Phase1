@@ -1028,12 +1028,12 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 43 "miniL.lex"
-{printf("BEGIN_LOOP\n"); pos += yyleng;}
+{printf("BEGINLOOP\n"); pos += yyleng;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 44 "miniL.lex"
-{printf("END_LOOP\n"); pos += yyleng;}
+{printf("ENDLOOP\n"); pos += yyleng;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
@@ -2205,8 +2205,8 @@ int main(int argc, char ** argv)
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
-   printf("Number of integers: %d\n", numbers);
-   printf("Number of parentheses: %d\n", parentheses); 
-   printf("Number of operators: %d\n", operators);
+   /*printf("Number of integers: %d\n", numbers);*/
+   /*printf("Number of parentheses: %d\n", parentheses);*/ 
+   /*printf("Number of operators: %d\n", operators);*/
 }
 
