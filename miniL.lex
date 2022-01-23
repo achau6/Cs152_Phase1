@@ -14,12 +14,15 @@
 %}
 
    /* some common rules */
-DIGIT                [0-9]
-LETTERS              [a-zA-Z]
-DIGITS               {0-9}*
-IDENTIFIER_WORD      {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+)*
+DIGIT                      [0-9]
+LETTERS                    [a-zA-Z]
+DIGITS                     {0-9}*
+IDENTIFIER_WORD            {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+)*
+IDENTIFIER_WORD_ERROR      {_}{LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+)*
+IDENTIFIER_WORD_ERROR_TWO  {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+{_})*
 
 
+/*later handle erro checking*/
 
 %%
    /* specific lexer rules in regex */
@@ -34,7 +37,7 @@ endbody        {printf("END_BODY\n"); pos += yyleng;}
 integer        {printf("INTEGER\n"); pos += yyleng;}
 array          {printf("ARRAY\n"); pos += yyleng;}
 of             {printf("OF\n"); pos += yyleng;}
-if             {printf("IF\n"); pos += yyleng;}
+if             {printf("IF\n"); pos += yyleng;}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
 then           {printf("THEN\n"); pos += yyleng;}
 endif          {printf("ENDIF\n"); pos += yyleng;}
 else           {printf("ELSE\n"); pos += yyleng;}
@@ -73,6 +76,8 @@ return         {printf("RETURN\n"); pos += yyleng;}
 [ \t]+         {pos += yyleng;}
 "\n"           {line++; pos = 1;}
 {IDENTIFIER_WORD}   {printf("IDENT %s\n", yytext); pos += yyleng;}
+{IDENTIFIER_WORD_ERROR}   {printf("IDENT_ERROR %s\n", yytext); pos += yyleng;}
+{IDENTIFIER_WORD_ERROR_TWO}   {printf("IDENT_ERROR_TWO %s\n", yytext); pos += yyleng;}
 .              {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", line, pos, yytext); exit(0);}
 
 
