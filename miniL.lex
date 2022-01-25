@@ -17,9 +17,9 @@
 DIGIT                      [0-9]
 LETTERS                    [a-zA-Z]
 DIGITS                     {0-9}*
-IDENTIFIER_WORD            {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+)*
-IDENTIFIER_WORD_ERROR      {_}{LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+)*
-IDENTIFIER_WORD_ERROR_TWO  {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+{_})*
+IDENTIFIER_WORD            {LETTERS}({LETTERS}|[_]|{DIGIT})*(({LETTERS}|DIGIT)+)*
+IDENTIFIER_WORD_ERROR      ({DIGIT}|[_])({LETTERS}|[_]|{DIGIT})*(({LETTERS}|DIGIT)+)*
+IDENTIFIER_WORD_ERROR_TWO  {LETTERS}(({LETTERS}|[_]|{DIGIT})*({LETTERS}|DIGIT)+[_])*
 
 
 /*later handle erro checking*/
@@ -37,7 +37,7 @@ endbody        {printf("END_BODY\n"); pos += yyleng;}
 integer        {printf("INTEGER\n"); pos += yyleng;}
 array          {printf("ARRAY\n"); pos += yyleng;}
 of             {printf("OF\n"); pos += yyleng;}
-if             {printf("IF\n"); pos += yyleng;}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
+if             {printf("IF\n"); pos += yyleng;}
 then           {printf("THEN\n"); pos += yyleng;}
 endif          {printf("ENDIF\n"); pos += yyleng;}
 else           {printf("ELSE\n"); pos += yyleng;}
@@ -76,8 +76,8 @@ return         {printf("RETURN\n"); pos += yyleng;}
 [ \t]+         {pos += yyleng;}
 "\n"           {line++; pos = 1;}
 {IDENTIFIER_WORD}   {printf("IDENT %s\n", yytext); pos += yyleng;}
-{IDENTIFIER_WORD_ERROR}   {printf("IDENT_ERROR %s\n", yytext); pos += yyleng;}
-{IDENTIFIER_WORD_ERROR_TWO}   {printf("IDENT_ERROR_TWO %s\n", yytext); pos += yyleng;}
+{IDENTIFIER_WORD_ERROR}       printf("Start Error at line %d, column %d: can not begin \"%s\"\n", line, pos, yytext);
+{IDENTIFIER_WORD_ERROR_TWO}   printf("End Error at line %d, column %d: can not end \"%s\"\n", line, pos, yytext);
 .              {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", line, pos, yytext); exit(0);}
 
 
@@ -90,7 +90,5 @@ int main(int argc, char ** argv)
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
-   /*printf("Number of integers: %d\n", numbers);*/
-   /*printf("Number of parentheses: %d\n", parentheses);*/ 
-   /*printf("Number of operators: %d\n", operators);*/
+  
 }
